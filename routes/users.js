@@ -80,8 +80,8 @@ router.get('/jumpLogin/:sign/:account/:checkpwd', async (ctx, next) => {
         }
         await Users.update({id:user.id, balance});
         // TODO 这里就应该跳转进入登录后的页面了
-        // ctx.redirect()
-        ctx.body = Rst.suc("跳转登录成功")
+        ctx.redirect('http://oa.gzxueersi.com/shop/index.html#/items');
+        // ctx.body = Rst.suc("跳转登录成功")
       }})
     }else {
       ctx.body = Rst.fail("帐号或密码错误",401)
