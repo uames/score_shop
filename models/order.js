@@ -5,6 +5,7 @@ fields = {
   item_id : {type : Sequelize.INTEGER, comment : '商品id'},
   name : {type : Sequelize.STRING, comment : '商品名称'},
   price : {type : Sequelize.INTEGER, comment : '商品价格'},
+  img : {type : Sequelize.STRING, comment : '商品图片'},
   // item_info : {type : Sequelize.TEXT, comment : '商品信息:{name:"商品名称",price:"商品价格"}'},
   user_id : {type : Sequelize.INTEGER, comment : '员工id'},
   user_name :  {type : Sequelize.STRING, comment : '收货人名称'},
@@ -16,8 +17,9 @@ fields = {
 },
 entity = {
   "item_id": 1,
-  "name": "艾美特(Airmate) FSW52R 遥控落地扇/电风扇",
+  "name": "艾美特(Airmate) FSW52R 遥控落地扇/电风扇 -【五叶遥控款】",
   "price": 179,
+  "img": "http://img14.360buyimg.com/n0/jfs/t5929/118/1182713408/71405/d5315851/592fea1fNbfe584ba.jpg",
   "user_name": "收货人名称",
   "phone": 18585256663,
   "address": "广州市",

@@ -70,7 +70,7 @@ router.put('/', async (ctx, next) => {
 // 2.将要设置的默认地址报错到user表中该用户的address字段中
 router.put('/on', async (ctx, next) => {
   await checkULogin(ctx).then(async ({flag,user})=>{ if(flag){
-    var address_id = ctx.params.id
+    var address_id = ctx.request.body.id
     var a = (await Address.retrieve({query:{where:{id:address_id,user_id:user.id}}}))[0]; // 取出当前要设为默认的地址数据
     if(a && a.id>0){
       if(a.status==1){
