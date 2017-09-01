@@ -29,7 +29,7 @@ var IDS = {}; // 已登录的普通用户对象列表,程序或服务器重启�
 const rebuildUser = user => {
   if(user){
     return {id:user.id, sid: user.sid, sign: user.sign, name: user.name, balance: user.balance,
-      phone: user.phone, checkpwd:user.checkpwd, createdAt:user.createdAt}
+      phone: user.phone, checkpwd:user.checkpwd, createdAt:user.createdAt, address: user.address}
   }else{
     return {}
   }

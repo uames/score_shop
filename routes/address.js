@@ -59,7 +59,7 @@ router.put('/', async (ctx, next) => {
     var status = body.status;
     delete body.status;
     var res = await Address.update(body)
-    // if(){
+    // if(status){
     //
     // }
     Rst.putRst(res, ctx);
