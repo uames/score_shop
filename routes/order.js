@@ -164,11 +164,12 @@ router.post('/', async (ctx, next) => {
       }
       if(sign=="lecture" || sign=="test"){
         orderPost()
+      } else {
+        await fetchPost({ctx, api_post, phone:user.phone, checkpwd:user.checkpwd, sign, balance: body.price, callBackFn:async (data)=>{
+          // 第三方系统已成功更新积分, 可以进行本地操作
+          orderPost()
+        }})
       }
-      await fetchPost({ctx, api_post, phone:user.phone, checkpwd:user.checkpwd, sign, balance: body.price, callBackFn:async (data)=>{
-        // 第三方系统已成功更新积分, 可以进行本地操作
-        orderPost()
-      }})
     }else {
       ctx.body = Rst.fail("积分余额不足")
     }
