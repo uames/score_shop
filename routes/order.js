@@ -157,11 +157,17 @@ router.post('/', async (ctx, next) => {
     if(user.balance >= body.price){
 
       var {api_post, sign} = await Activity.retrieve({id:user.sid});
-      await fetchPost({ctx, api_post, phone:user.phone, checkpwd:user.checkpwd, sign, balance: body.price, callBackFn:async (data)=>{
-        // 第三方系统已成功更新积分, 可以进行本地操作
+      var orderPost = () => {
         var order = await Order.create({...body, sid: user.sid, user_id: user.id, status: 1})
         await Users.update({id:user.id, balance:user.balance - body.price})
         ctx.body = {id: order.id, ...(Rst.suc("添加订单成功"))}
+      }
+      if(sign=="lecture" || sign=="test"){
+        orderPost()
+      }
+      await fetchPost({ctx, api_post, phone:user.phone, checkpwd:user.checkpwd, sign, balance: body.price, callBackFn:async (data)=>{
+        // 第三方系统已成功更新积分, 可以进行本地操作
+        orderPost()
       }})
     }else {
       ctx.body = Rst.fail("积分余额不足")
