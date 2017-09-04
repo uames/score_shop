@@ -157,7 +157,7 @@ router.post('/', async (ctx, next) => {
     if(user.balance >= body.price){
 
       var {api_post, sign} = await Activity.retrieve({id:user.sid});
-      var orderPost = () => {
+      var orderPost = async () => {
         var order = await Order.create({...body, sid: user.sid, user_id: user.id, status: 1})
         await Users.update({id:user.id, balance:user.balance - body.price})
         ctx.body = {id: order.id, ...(Rst.suc("添加订单成功"))}
