@@ -70,19 +70,23 @@ router.get('/jumpLogin/:sign/:account/:checkpwd', async (ctx, next) => {
       ctx.cookies.set(UserSession, user.id);
       // 这里调用 activity 表中 sid 为 user.sid 的积分同步接口, 将 user.phone 和 checkpwd 传过去获取数据
       var api_get = activitys[0]?activitys[0]['api_get']:'';
-      await fetchGet({ctx, api_get, phone, checkpwd, sign, callBackFn:async ({balance})=>{
-        if(sign=='lecture'){
-          if(balance > user.used_balance){
-            balance -= user.used_balance
-          }else {
-            balance = 0
-          }
-        }
-        await Users.update({id:user.id, balance});
-        // TODO 这里就应该跳转进入登录后的页面了
+      if(user.id < 10){ // TODO id为1-9的用户积分不会被接口改变(测试用)
         ctx.redirect('http://oa.gzxueersi.com/shop/index.html#/items');
-        // ctx.body = Rst.suc("跳转登录成功")
-      }})
+      } else {
+        await fetchGet({ctx, api_get, phone, checkpwd, sign, callBackFn:async ({balance})=>{
+          if(sign=='lecture'){
+            if(balance > user.used_balance){
+              balance -= user.used_balance
+            }else {
+              balance = 0
+            }
+          }
+          await Users.update({id:user.id, balance});
+          // TODO 这里就应该跳转进入登录后的页面了
+          ctx.redirect('http://oa.gzxueersi.com/shop/index.html#/items');
+          // ctx.body = Rst.suc("跳转登录成功")
+        }})
+      }
     }else {
       ctx.body = Rst.fail("帐号或密码错误",401)
     }
