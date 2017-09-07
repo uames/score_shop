@@ -158,16 +158,17 @@ router.post('/', async (ctx, next) => {
 
       var {api_post, sign} = await Activity.retrieve({id:user.sid});
       var orderPost = async () => {
+        // TODO 这里可能需要把 缓存的 user 数据删除, 或更新其缓存的 balance和used_balance
         var order = await Order.create({...body, sid: user.sid, user_id: user.id, status: 1})
         await Users.update({id:user.id, balance:user.balance - body.price, used_balance: user.used_balance + body.price})
         ctx.body = {id: order.id, ...(Rst.suc("添加订单成功"))}
       }
       if(sign=="lecture" || sign=="test"){
-        orderPost()
+        await orderPost()
       } else {
         await fetchPost({ctx, api_post, phone:user.phone, checkpwd:user.checkpwd, sign, balance: body.price, callBackFn:async (data)=>{
           // 第三方系统已成功更新积分, 可以进行本地操作
-          orderPost()
+          await orderPost()
         }})
       }
     }else {
