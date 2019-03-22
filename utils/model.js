@@ -70,13 +70,13 @@ const initTable = ({fields, table, entity})=>{
   const Model = defineModel(table, fields);
 
   const build = ()=>{
-    if(table=='order'){
+    // if(table=='order'){
       Model.sync({force: true}).then(() => {
         if(entity && !isEmptyObject(entity)){
           return Model.create(entity);
         }
       })
-    }
+    // }
   }
   // 增 C
   const create = async (model)=>{
