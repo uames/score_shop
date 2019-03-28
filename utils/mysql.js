@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import fs from 'fs'
 
-let name = 'root', pwd = '909090', host = '127.0.0.1', database = 'shop';
+let name = 'root', pwd = '', host = '127.0.0.1', database = 'shop';
 if(process.env.NODE_ENV=='production'){
   name = 'www';
   pwd = 'aef224bc04fbacd1';
